@@ -66,8 +66,8 @@ int nrf_data_packet[15]; //array of variables to be received, the array seems on
 
   // put your main code here, to run repeatedly:
 delay(10); //stability pause
-  while (rx_module.available()) { //control loop to keep reading NRF module as long as it's available
-rx_module.read(&nrf_data_packet, sizeof(nrf_data_packet));}
+//  while (rx_module.available()) { //control loop to keep reading NRF module as long as it's available
+rx_module.read(&nrf_data_packet, sizeof(nrf_data_packet));//}
 
   h = nrf_data_packet[0];
   t = nrf_data_packet[1];
