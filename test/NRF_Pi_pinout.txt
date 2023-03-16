@@ -1,0 +1,4 @@
+/*
+The nrf24 module seems to be scanning on the pi
+RF24 radio(25, 0);
+*/
