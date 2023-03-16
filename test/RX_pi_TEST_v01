@@ -4,19 +4,19 @@
 
 using namespace std;
 
-RF24 radio(25, 0);
+RF24 rx_module(25, 0);
 
-#define BCM_PIN 7
-#define SPI_DEV 0
-#define MAX_LEN 14
+//#define BCM_PIN 7
+//#define SPI_DEV 0
+#define MAX_LEN 30
 
-uint8_t nrf_data_packet[MAX_LEN];
-uint8_t pipeNumber;
+int nrf_data_packet[MAX_LEN];
+//int pipeNumber;
 
 
 //==============code pasted from arduino nano==================
 
-uint8_t address[6] = {"42"}; //address for the module, AFAIK both TX and RX modules should have same value here
+//int address[6] = {"42"}; //address for the module, AFAIK both TX and RX modules should have same value here
 int h = 0; //humidity value as read from dht_sensor1 NOTE for NRF use - 2 bytes
 int t = 0; //temperature value as read from dht_sensor1 NOTE for NRF use - 2 bytes
 
@@ -37,25 +37,26 @@ int pump2_volts_val = 0; //voltage on pump2 NOTE for NRF use - 2 bytes
 int pump2_amps_val = 0; //current on pump2 NOTE for NRF use - 2 bytes
 
 int powerlim_val = 0; //power limit value NOTE for NRF use - 2 bytes
-int nrf_data_packet[14]; //array of variables to be received, the array seems one smaller than total number of variables because 0-9 not 1-10
+//int nrf_data_packet[14]; //array of variables to be received, the array seems one smaller than total number of variables because 0-9 not 1-10
 
 
 //==============================STRINGS FOR EASIER READING OF SERIAL==============================
-char gen1_onstate[] = "ON ";
-char gen1_offstate[] = "OFF";
-char gen2_onstate[] = "ON ";
-char gen2_offstate[] = "OFF";
-char pump1_onstate[] = "ON ";
-char pump1_offstate[] = "OFF";
-char pump2_onstate[] = "ON ";
-char pump2_offstate[] = "OFF";
+//char gen1_onstate[] = "ON ";
+//char gen1_offstate[] = "OFF";
+//char gen2_onstate[] = "ON ";
+//char gen2_offstate[] = "OFF";
+//char pump1_onstate[] = "ON ";
+//char pump1_offstate[] = "OFF";
+//char pump2_onstate[] = "ON ";
+//char pump2_offstate[] = "OFF";
 
 //============================================================
 
 int main() {
 
+while (true){
 rx_module.begin(); //initialize the RX module
-rx_module.openReadingPipe(0x7878787878LL); //open communication pipe
+rx_module.openReadingPipe(0, 0x7878787878LL); //open communication pipe
 rx_module.setChannel(110); //set the radio channel, must be same as on TX
 rx_module.setPALevel(RF24_PA_MAX); //set power of NRF module, can be changed to RF24_PA_MIN for lower power consumptiom, BUT MUST BE SAME ON THE RX MODULE!!!
 rx_module.setDataRate(RF24_250KBPS);
@@ -86,24 +87,26 @@ rx_module.read(nrf_data_packet, sizeof(nrf_data_packet));
 
   //printf("Value of i = %d\n",i);
 
-  printf("h = %d\n", h);
-  printf("t = %d\n", t);
+  printf("h = %d", h);
+  printf(" t = %d", t);
 
-  printf(" Gen1 ON/OFF: %d\n", gen1_switch_state);
-  printf(" Gen1 V: %d\n", gen1_volts_val);
-  printf(" Gen1 I: %d\n", gen1_amps_val);
+  printf(" Gen1 ON/OFF: %d", gen1_switch_state);
+  printf(" Gen1 V: %d", gen1_volts_val);
+  printf(" Gen1 I: %d", gen1_amps_val);
 
-  printf(" Gen2 ON/OFF: %d\n", gen2_switch_state);
-  printf(" Gen2 V: %d\n", gen2_volts_val);
-  printf(" Gen2 I: %d\n", gen2_amps_val);
+  printf(" Gen2 ON/OFF: %d", gen2_switch_state);
+  printf(" Gen2 V: %d", gen2_volts_val);
+  printf(" Gen2 I: %d", gen2_amps_val);
 
-  printf(" Pump1 ON/OFF: %d\n", pump1_switch_state);
-  printf(" Pump1 V: %d\n", pump1_volts_val);
-  printf(" Pump1 I = %d\n", pump1_amps_val);
+  printf(" Pump1 ON/OFF: %d", pump1_switch_state);
+  printf(" Pump1 V: %d", pump1_volts_val);
+  printf(" Pump1 I = %d", pump1_amps_val);
 
-  printf(" Pump2 ON/OFF: %d\n", pump2_switch_state);
-  printf(" Pump2 V: %d\n", pump2_volts_val);
-  printf(" Pump2 I: %d\n", pump2_amps_val);
+  printf(" Pump2 ON/OFF: %d", pump2_switch_state);
+  printf(" Pump2 V: %d", pump2_volts_val);
+  printf(" Pump2 I: %d", pump2_amps_val);
 
-  printf(" Power Limit : %d\n", powerlim_val);
+  printf(" Power Limit : %d\r", powerlim_val);
+}
+return 0;
 }
