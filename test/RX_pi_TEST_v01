@@ -8,7 +8,7 @@ RF24 rx_module(25, 0);
 
 //#define BCM_PIN 7
 //#define SPI_DEV 0
-#define MAX_LEN 30
+#define MAX_LEN 15
 
 int nrf_data_packet[MAX_LEN];
 //int pipeNumber;
@@ -56,7 +56,7 @@ int main() {
 
 while (true){
 rx_module.begin(); //initialize the RX module
-rx_module.openReadingPipe(0, 0x7878787878LL); //open communication pipe
+rx_module.openReadingPipe(1, 0x7878787878LL); //open communication pipe
 rx_module.setChannel(110); //set the radio channel, must be same as on TX
 rx_module.setPALevel(RF24_PA_MAX); //set power of NRF module, can be changed to RF24_PA_MIN for lower power consumptiom, BUT MUST BE SAME ON THE RX MODULE!!!
 rx_module.setDataRate(RF24_250KBPS);
