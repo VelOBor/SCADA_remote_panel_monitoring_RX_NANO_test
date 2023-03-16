@@ -62,7 +62,7 @@ rx_module.setPALevel(RF24_PA_MAX); //set power of NRF module, can be changed to 
 rx_module.setDataRate(RF24_250KBPS);
 rx_module.startListening(); //puts the NRF module into RECEIVE MODE
 
-rx_module.read(nrf_data_packet, sizeof(nrf_data_packet));
+rx_module.read(nrf_data_packet, MAX_LEN));
 
   h = nrf_data_packet[0];
   t = nrf_data_packet[1];
