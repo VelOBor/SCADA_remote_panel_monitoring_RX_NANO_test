@@ -8,15 +8,12 @@ RF24 rx_module(25, 0);
 
 //#define BCM_PIN 7
 //#define SPI_DEV 0
-#define MAX_LEN 15
+#define MAX_LEN 30
 
 int nrf_data_packet[MAX_LEN];
-//int pipeNumber;
-
 
 //==============code pasted from arduino nano==================
 
-//int address[6] = {"42"}; //address for the module, AFAIK both TX and RX modules should have same value here
 int h = 0; //humidity value as read from dht_sensor1 NOTE for NRF use - 2 bytes
 int t = 0; //temperature value as read from dht_sensor1 NOTE for NRF use - 2 bytes
 
@@ -37,21 +34,8 @@ int pump2_volts_val = 0; //voltage on pump2 NOTE for NRF use - 2 bytes
 int pump2_amps_val = 0; //current on pump2 NOTE for NRF use - 2 bytes
 
 int powerlim_val = 0; //power limit value NOTE for NRF use - 2 bytes
-//int nrf_data_packet[14]; //array of variables to be received, the array seems one smaller than total number of variables because 0-9 not 1-10
 
-
-//==============================STRINGS FOR EASIER READING OF SERIAL==============================
-//char gen1_onstate[] = "ON ";
-//char gen1_offstate[] = "OFF";
-//char gen2_onstate[] = "ON ";
-//char gen2_offstate[] = "OFF";
-//char pump1_onstate[] = "ON ";
-//char pump1_offstate[] = "OFF";
-//char pump2_onstate[] = "ON ";
-//char pump2_offstate[] = "OFF";
-
-//============================================================
-
+//=======================================
 int main() {
 
 while (true){
@@ -62,7 +46,7 @@ rx_module.setPALevel(RF24_PA_MAX); //set power of NRF module, can be changed to 
 rx_module.setDataRate(RF24_250KBPS);
 rx_module.startListening(); //puts the NRF module into RECEIVE MODE
 
-rx_module.read(nrf_data_packet, MAX_LEN));
+rx_module.read(nrf_data_packet, MAX_LEN);
 
   h = nrf_data_packet[0];
   t = nrf_data_packet[1];
@@ -106,7 +90,9 @@ rx_module.read(nrf_data_packet, MAX_LEN));
   printf(" Pump2 V: %d", pump2_volts_val);
   printf(" Pump2 I: %d", pump2_amps_val);
 
-  printf(" Power Limit : %d\r", powerlim_val);
+  printf(" Power Limit : %d\n", powerlim_val);
+
+
 }
 return 0;
 }
